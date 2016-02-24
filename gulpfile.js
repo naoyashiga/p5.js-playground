@@ -13,7 +13,7 @@ gulp.task('server', function() {
 
 // Rerun the task when a file changes
  gulp.task('watch', function() {
-     gulp.watch('sketches/**/*.js', ['']); 
+     gulp.watch(['sketches/**/*.js','sketches/**/*.html'], ['']); 
 });
 
   gulp.task('default', ['watch','server']);
