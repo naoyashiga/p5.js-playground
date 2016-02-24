@@ -15,8 +15,8 @@ function draw() {
 	var xoff = yoff;
 
 	for (var x = 0; x <= width; x += 10) {
-		// var y = map(noise(xoff, yoff), 0, 1, height / 2, height / 1.2);
-		var y = map(noise(xoff), 0, 1, height / 2, height / 1.2);
+		var y = map(noise(xoff, yoff), 0, 1, height / 2, height / 1.2);
+		// var y = map(noise(xoff), 0, 1, height / 2, height / 1.2);
 
 		vertex(x ,y);
 
