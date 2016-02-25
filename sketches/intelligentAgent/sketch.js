@@ -7,14 +7,18 @@ posXcross, posYcross,
 direction = SOUTH,
 angleCount = 7,
 angle = getRandomAngle(direction),
-stepSize = 30,
-minLength = 10;
+stepSize = 15,
+minLength = 5;
 
+var myColor = {
+     background: 0,
+	line: 200
+}
 
 function setup() {
   createCanvas(window.innerWidth, window.innerHeight);
   smooth();
-  background(0);
+  background(myColor.background);
 
   posX = Math.floor(getRandomNum(0, width));
   posY = 5;
@@ -23,10 +27,9 @@ function setup() {
 }
 
 function draw() {
-	// background(51);
 	for (var i = 0; i < 1; i++) {
 		strokeWeight(1);
-		stroke(200);
+		stroke(myColor.line);
 
 		point(posX, posY);
 
@@ -56,15 +59,14 @@ function draw() {
 		var px = posX;
 		var py = posY;
 
-		if (get(px, py) != color(0) || reachedBorder) {
+		if (get(px, py) != color(myColor.background) || reachedBorder) {
 			angle = getRandomAngle(direction);
 
 			var distance = dist(posX, posY, posXcross, posYcross);
 
-
 			if(distance >= minLength) {
 				strokeWeight(1);
-				stroke(200);
+				stroke(myColor.line);
 				line(posX, posY, posXcross, posYcross);
 			}
 
@@ -75,7 +77,7 @@ function draw() {
 }
 
 function getRandomAngle(theDirection) {
-	var a = Math.floor(getRandomNum(-angleCount, angleCount)) + 0.5 * 90.0 / angleCount;
+	var a = (Math.floor(getRandomNum(-angleCount, angleCount)) + 0.5) * 90.0 / angleCount;
 
 	// console.log(a);
 
