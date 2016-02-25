@@ -12,11 +12,12 @@ minLength = 5;
 
 var myColor = {
      background: 0,
-	line: 200
+	line: 360
 }
 
 function setup() {
   createCanvas(window.innerWidth, window.innerHeight);
+  colorMode(HSB, 360, 100, 100, 100);
   smooth();
   background(myColor.background);
 
@@ -27,6 +28,7 @@ function setup() {
 }
 
 function draw() {
+	// very slow on browser if many loops
 	for (var i = 0; i < 1; i++) {
 		strokeWeight(1);
 		stroke(myColor.line);
@@ -78,8 +80,6 @@ function draw() {
 
 function getRandomAngle(theDirection) {
 	var a = (Math.floor(getRandomNum(-angleCount, angleCount)) + 0.5) * 90.0 / angleCount;
-
-	// console.log(a);
 
 	switch(theDirection) {
 		case NORTH:
