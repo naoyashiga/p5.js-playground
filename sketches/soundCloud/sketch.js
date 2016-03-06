@@ -1,7 +1,19 @@
-var TRACK_URL = "https://soundcloud.com/jerbeary/mrsaxobeat";
+var TRACK_URL = "https://soundcloud.com/iikaode/by-2";
 
 var visualize = function(track) {
 	var streamURL = track.stream_url + "?client_id=" + CLIENT_ID;
+	var particles = [];
+
+	function Particle($p, radius) {
+		this.$p = $p;
+    	this.width = radius;
+    	this.height = radius;
+    	this.depth = radius;
+	}
+
+	Particle.prototype.render = function() {
+		this.$p.box(this.width, this.height, this.depth);
+	}
 
 	var sketch = function($p) {
 
@@ -16,31 +28,35 @@ var visualize = function(track) {
 
 		$p.setup = function() {
 			$p.createCanvas($p.windowWidth, $p.windowHeight, $p.WEBGL);
+
+			for(var i = 0; i < 1; i++) {
+				particles.push(new Particle($p, 100));
+			}
+			sound.loop();
 		};
 
 		$p.draw = function() {
 			$p.background(51);
+			// $p.basicMaterial(20, 0, 0);
+			$p.ambientLight(100);
+			$p.pointLight(250, 250, 250, 100, 100, 0);
+			$p.ambientMaterial(250);
 
 			var spectrum = fft.analyze();
-			var amplitude = fft.getEnergy(spectrum[128]);
 
-			var radius = $p.map(amplitude, 0, 255, 100, 200);
+			$p.rotateX($p.frameCount * 0.005);
+  			$p.rotateY($p.frameCount * 0.01);
 
-			amplitude = fft.getEnergy(spectrum[200]);
-			var boxW = $p.map(amplitude, 0, 255, 100, 200);
+			for(var i = 0; i < particles.length; i++) {
+				var current_p = particles[i];
 
-			amplitude = fft.getEnergy(spectrum[50]);
-			var boxH = $p.map(amplitude, 0, 255, 100, 200);
-
-			$p.rotateX($p.frameCount * 0.01);
-  			$p.rotateZ($p.frameCount * 0.01);
-
-			$p.push();
-			$p.fill(255);
-			// $p.translate($p.windowWidth / 2, $p.windowHeight / 2);
-			// $p.ellipse(0, 0, radius, radius);
-			$p.box(boxW, boxH, radius);
-			$p.pop();
+				var amplitude = fft.getEnergy(spectrum[i * (1024 % particles.length)]);
+				current_p.width = $p.map(amplitude, 0, 255, 30, 100);
+				// current_p.height = $p.map(amplitude, 0, 255, 30, 50);
+				// current_p.depth = $p.map(amplitude, 0, 255, 50, 80);
+				// $p.translate(i * 50, 0);
+				current_p.render();
+			}
 		};
 
 		$p.mousePressed = function() {
