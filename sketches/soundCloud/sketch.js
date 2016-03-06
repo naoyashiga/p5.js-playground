@@ -5,10 +5,10 @@ var visualize = function(track) {
 
 	var sketch = function(p) {
 
-		var song;
-		
+		var sound;
+
 		p.preload = function(){
-			song = p.loadSound(streamURL);
+			sound = p.loadSound(streamURL);
 		}
 
 		p.setup = function() {
@@ -18,6 +18,15 @@ var visualize = function(track) {
 		p.draw = function() {
 			p.background(51);
 			p.fill(255);
+		};
+
+		p.mousePressed = function() {
+
+			if(sound.isPlaying()) {
+				sound.pause();
+			} else {
+				sound.loop();
+			}
 		};
 	};
 
