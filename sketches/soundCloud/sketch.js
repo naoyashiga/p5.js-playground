@@ -15,7 +15,7 @@ var visualize = function(track) {
 		}
 
 		$p.setup = function() {
-			$p.createCanvas($p.windowWidth, $p.windowHeight);
+			$p.createCanvas($p.windowWidth, $p.windowHeight, $p.WEBGL);
 		};
 
 		$p.draw = function() {
@@ -26,10 +26,20 @@ var visualize = function(track) {
 
 			var radius = $p.map(amplitude, 0, 255, 100, 200);
 
+			amplitude = fft.getEnergy(spectrum[200]);
+			var boxW = $p.map(amplitude, 0, 255, 100, 200);
+
+			amplitude = fft.getEnergy(spectrum[50]);
+			var boxH = $p.map(amplitude, 0, 255, 100, 200);
+
+			$p.rotateX($p.frameCount * 0.01);
+  			$p.rotateZ($p.frameCount * 0.01);
+
 			$p.push();
 			$p.fill(255);
-			$p.translate($p.windowWidth / 2, $p.windowHeight / 2);
-			$p.ellipse(0, 0, radius, radius);
+			// $p.translate($p.windowWidth / 2, $p.windowHeight / 2);
+			// $p.ellipse(0, 0, radius, radius);
+			$p.box(boxW, boxH, radius);
 			$p.pop();
 		};
 
