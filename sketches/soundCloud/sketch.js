@@ -3,24 +3,37 @@ var TRACK_URL = "https://soundcloud.com/jerbeary/mrsaxobeat";
 var visualize = function(track) {
 	var streamURL = track.stream_url + "?client_id=" + CLIENT_ID;
 
-	var sketch = function(p) {
+	var sketch = function($p) {
 
 		var sound;
+		var fft = null;
 
-		p.preload = function(){
-			sound = p.loadSound(streamURL);
+		$p.preload = function(){
+			sound = $p.loadSound(streamURL);
+
+			fft = new p5.FFT();
 		}
 
-		p.setup = function() {
-			p.createCanvas(window.innerWidth, window.innerHeight);
+		$p.setup = function() {
+			$p.createCanvas($p.windowWidth, $p.windowHeight);
 		};
 
-		p.draw = function() {
-			p.background(51);
-			p.fill(255);
+		$p.draw = function() {
+			$p.background(51);
+
+			var spectrum = fft.analyze();
+			var amplitude = fft.getEnergy(spectrum[128]);
+
+			var radius = $p.map(amplitude, 0, 255, 100, 200);
+
+			$p.push();
+			$p.fill(255);
+			$p.translate($p.windowWidth / 2, $p.windowHeight / 2);
+			$p.ellipse(0, 0, radius, radius);
+			$p.pop();
 		};
 
-		p.mousePressed = function() {
+		$p.mousePressed = function() {
 
 			if(sound.isPlaying()) {
 				sound.pause();
