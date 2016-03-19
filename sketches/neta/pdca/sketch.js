@@ -1,30 +1,26 @@
-var yoff = 0.0;
+var tSize = 32;
+
+var corner;
+
+var direction = 30;
 
 function setup() {
   createCanvas(window.innerWidth, window.innerHeight);
+
+  textSize(tSize);
+
+  corner = createVector(direction, direction);
 }
 
 function draw() {
-	background(51);
+	background(0);
 
 	fill(255);
 
-	beginShape();
+	translate(width / 2, height / 2);
+	text("P", -corner.x - tSize / 2, -corner.y + tSize / 2);
+	text("D", corner.x - tSize / 2, -corner.y + tSize / 2);
+	text("C", corner.x - tSize / 2, corner.y + tSize / 2);
+	text("A", -corner.x - tSize / 2, corner.y + tSize / 2);
 
-	// var xoff = 0;
-	var xoff = yoff;
-
-	for (var x = 0; x <= width; x += 10) {
-		var y = map(noise(xoff, yoff), 0, 1, height / 2, height / 1.2);
-		// var y = map(noise(xoff), 0, 1, height / 2, height / 1.2);
-
-		vertex(x ,y);
-
-		xoff += 0.05;
-	}
-
-	yoff += 0.01;
-	vertex(width, height);
-	vertex(0, height);
-	endShape(CLOSE);
 }
