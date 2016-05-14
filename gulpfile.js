@@ -4,7 +4,7 @@ var gulp = require('gulp'), 
     webserver = require('gulp-webserver');
 
 gulp.task('server', function() {
-  gulp.src('./sketches/BirthAndDeath')
+  gulp.src('./sketches/generative/zooming')
     .pipe(webserver({
       livereload: true,
       open: true
