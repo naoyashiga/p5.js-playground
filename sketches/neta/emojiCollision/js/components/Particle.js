@@ -1,7 +1,7 @@
 
 export default class Particle {
   constructor(p, location) {
-    var v = 10;
+    var v = 1;
 
     this.p = p;
 
@@ -9,8 +9,16 @@ export default class Particle {
     this.velocity = p.createVector(p.random(-v, v), p.random(-v, v));
     this.location = location.copy();
 
-    this.radius = 10;
+    this.diameter = 30;
 
+    this.wall = {
+      top: this.diameter / 2,
+      right: this.p.windowWidth - this.diameter / 2,
+      bottom: this.p.windowHeight - this.diameter / 2,
+      left: this.diameter / 2
+    }
+
+    this.p.textSize(20);
   }
 
   run() {
@@ -27,12 +35,30 @@ export default class Particle {
   display() {
     this.p.noStroke();
     this.p.fill(0);
-    this.p.ellipse(this.location.x, this.location.y, this.radius, this.radius);
+
+    this.p.ellipse(this.location.x, this.location.y, this.diameter, this.diameter);
+    // this.p.text("A", this.location.x, this.location.y);
   }
 
   borders() {
-    if (this.location.x < 0 || this.location.x > this.p.windowWidth) this.velocity.x *= -1;
-    if (this.location.y < 0 || this.location.y > this.p.windowHeight) this.velocity.y *= -1;
-  }
+    if (this.location.y < this.wall.top) {
+      this.location.y = this.wall.top;
+      this.velocity.y *= -1;
+    }
 
+    if (this.location.x > this.wall.right) {
+      this.location.x = this.wall.right;
+      this.velocity.x *= -1;
+    }
+
+    if (this.location.y > this.wall.bottom) {
+      this.location.y = this.wall.bottom;
+      this.velocity.y *= -1;
+    }
+
+    if (this.location.x < this.wall.left) {
+      this.location.x = this.wall.left;
+      this.velocity.x *= -1;
+    }
+  }
 }

@@ -1,26 +1,19 @@
 import P5 from "p5";
-import Particle from "./Particle";
+import ParticleSystem from "./ParticleSystem";
 
-export default class Visualization {
+class Visualization {
   constructor(cb) {
-    const _this = this;
-
-    console.log("aa");
-    new P5(s);
-
+    new P5(sketch);
 
     // Callback onLoaded
     cb();
   }
-
 }
 
-const s = function(p) {
+const sketch = (p) => {
 
-  var particles = [];
+  var system;
   p.preload = function() {
-
-
 
   }
 
@@ -28,25 +21,22 @@ const s = function(p) {
     p.createCanvas(p.windowWidth, p.windowHeight);
     p.background(255);
 
-    var num = 10;
+    system = new ParticleSystem();
+
+    var num = 30;
 
     for(var i = 0; i < num; i++) {
       var l = p.createVector(p.random(p.windowWidth), p.random(p.windowHeight));
 
-      particles.push(new Particle(p, l));
+      system.addParticle(p, l);
     }
-
-
-
   }
 
   p.draw = function() {
-    p.background(255);
+    p.background(100);
 
-    particles.forEach(function(particle) {
-      particle.run();
-    })
-
+    system.run();
   }
-
 }
+
+export default Visualization;
