@@ -38,6 +38,11 @@ const sketch = (p) => {
 
     system.run();
   }
+
+  p.windowResized = function() {
+    p.resizeCanvas(p.windowWidth, p.windowHeight);
+
+  }
 }
 
 export default Visualization;

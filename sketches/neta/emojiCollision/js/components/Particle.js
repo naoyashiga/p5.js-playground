@@ -9,18 +9,17 @@ export default class Particle {
     this.location = location.copy();
 
 
-    this.diameter = 150;
-    // this.diameter = this.p.windowWidth / 10;
+    if(this.p.windowWidth > 1200) {
+      this.diameter = 230;
+    } else {
+      this.diameter = 130;
+    }
 
     this.wall = {
       top: this.diameter,
       right: this.p.windowWidth - this.diameter,
       bottom: this.p.windowHeight,
       left: 0
-      // top: this.diameter,
-      // right: this.p.windowWidth - this.diameter,
-      // bottom: this.p.windowHeight - this.diameter,
-      // left: -this.diameter
     }
 
     this.p.textSize(this.diameter);
