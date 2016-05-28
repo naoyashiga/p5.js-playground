@@ -3,7 +3,7 @@ import ParticleSystem from "./ParticleSystem";
 
 class Visualization {
   constructor(cb) {
-    new P5(sketch);
+    this.hoge = new P5(sketch);
 
     // Callback onLoaded
     cb();
@@ -23,17 +23,18 @@ const sketch = (p) => {
 
     system = new ParticleSystem();
 
-    var num = 30;
+    var num = 1;
 
     for(var i = 0; i < num; i++) {
-      var l = p.createVector(p.random(p.windowWidth), p.random(p.windowHeight));
+      // var l = p.createVector(p.random(p.windowWidth), p.random(p.windowHeight));
+      var l = p.createVector(p.windowWidth / 2, p.windowHeight / 2);
 
       system.addParticle(p, l);
     }
   }
 
   p.draw = function() {
-    p.background(100);
+    p.background(255);
 
     system.run();
   }

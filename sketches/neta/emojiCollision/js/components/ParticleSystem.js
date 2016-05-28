@@ -3,7 +3,6 @@ import Particle from "./Particle";
 export default class ParticleSystem {
   constructor() {
     this.particles = [];
-
   }
 
   addParticle(p, location) {
@@ -11,7 +10,6 @@ export default class ParticleSystem {
   }
 
   run() {
-
     this.particles.forEach((particle) => {
       particle.run();
     })
