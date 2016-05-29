@@ -1,5 +1,6 @@
 import P5 from "p5";
 import ParticleSystem from "./ParticleSystem";
+import ColorPalette from "../ColorPalette";
 
 class Visualization {
   constructor(cb) {
@@ -25,16 +26,23 @@ const sketch = (p) => {
 
   p.setup = function() {
     p.createCanvas(p.windowWidth, p.windowHeight);
-    p.background(255);
+    // p.background("#EEEEEE");
+
+    var colorTheme = Math.floor(p.random(ColorPalette.length));
+    var bgColorIndex = Math.floor(p.random(ColorPalette[colorTheme].length));
+    p.background(ColorPalette[colorTheme][bgColorIndex]);
+    // p.background("#ffffff");
+
+    p.noLoop();
 
     // system = new ParticleSystem(p);
+    console.log(ColorPalette);
 
-    colors = [
-      p.color("#222831"),
-      p.color("#393E46"),
-      p.color("#00ADB5"),
-      p.color("#EEEEEE")
-    ];
+    // colors = [
+    //   ["#222831", "#393E46", "#00ADB5", "#EEEEEE"],
+    //   ["#222831", "#2D4059", "#FF5722", "#EEEEEE"],
+    //   ["#0278AE", "#51DACF", "#9EF5CF", "#E8FFC1"],
+    // ];
     // colors = [
     //   [34, 40, 49],
     //   [57, 62, 70],
@@ -52,12 +60,13 @@ const sketch = (p) => {
     p.strokeWeight(20);
     p.noiseSeed(p.random(100));
 
+
     for(var i = 0; i < p.windowWidth; i += density) {
-      var rnd = Math.floor(p.random(colors.length));
+      var rnd = Math.floor(p.random(ColorPalette[colorTheme].length));
 
       // p.fill(colors[rnd]);
       // lineColors.push(colors[rnd]);
-      p.stroke(colors[rnd]);
+      p.stroke(ColorPalette[colorTheme][rnd]);
       // p.rect(i, 0, i + density, p.windowHeight);
 
       // var p1 = {x: i, y: 0},
