@@ -31,8 +31,8 @@ export default class Particle {
   }
 
   display() {
-    this.p.noStroke();
-    this.p.fill(0);
+    // this.p.noStroke();
+    // this.p.fill(0);
 
     // this.p.ellipse(this.location.x, this.location.y, this.diameter, this.diameter);
 
