@@ -5,7 +5,7 @@ import babelify from 'babelify';
 import watchify from 'watchify';
 import source from 'vinyl-source-stream';
 
-var workingDir = 'sketches/generative/shibafu';
+var workingDir = 'sketches/generative/vertex';
 
 function compile(watch) {
   var bundler = watchify(browserify(workingDir + '/js/sketch.js', { debug: true }).transform(babelify, {presets: ["es2015"]}));

@@ -11,14 +11,12 @@ class Visualization {
 
 const sketch = (p) => {
 
-  var density = 3;
-  var lines = [];
-  var lineColors = [];
+  const density = 3;
 
   p.setup = function() {
-    var colorTheme = getRandomArrayIndex(ColorPalette);
-    var bgColorIndex = getRandomArrayIndex(ColorPalette[colorTheme]);
-    var xoff = 1;
+    let colorTheme = getRandomArrayIndex(ColorPalette);
+    let bgColorIndex = getRandomArrayIndex(ColorPalette[colorTheme]);
+    let xoff = 1;
 
     p.createCanvas(p.windowWidth, p.windowHeight);
     p.background(ColorPalette[colorTheme][bgColorIndex]);
