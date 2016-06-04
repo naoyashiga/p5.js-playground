@@ -14,13 +14,16 @@ const sketch = (p) => {
   const density = 30;
 
   var center = {x: 0, y: 0};
-  var stepSize = 2;
+  var stepSize = 1;
 
-  var vertexLength = 15;
+  var vertexLength = 5;
   var px = [];
   var py = [];
 
   var debug = 1;
+
+  var colorTheme = getRandomArrayIndex(ColorPalette);
+  var bgColorIndex = getRandomArrayIndex(ColorPalette[colorTheme]);
 
   p.setup = function() {
     let xoff = 1;
@@ -30,15 +33,18 @@ const sketch = (p) => {
     p.createCanvas(p.windowWidth, p.windowHeight);
 
     center.x = p.windowWidth / 2;
-    // center.y = p.windowHeight / 2;
-    center.y = 0;
+    center.y = p.windowHeight / 2;
+    // center.y = 0;
 
-    p.background("#ffffff");
+    p.background("#80D6FF");
+    // p.background("#ffffff");
+    // p.background(ColorPalette[colorTheme][bgColorIndex]);
 
     // p.noLoop();
 
-    p.strokeWeight(0.75);
-    p.stroke("#000000");
+    // p.strokeWeight(0.5);
+    p.strokeWeight(10);
+    // p.stroke("#000000");
     p.noFill();
 
 
@@ -54,6 +60,7 @@ const sketch = (p) => {
     var x1 = p.cos(angle) * radius;
     var y1 = p.sin(angle) * radius;
     var x2 = p.cos(angle - p.PI) * radius;
+    // var x2 = radius;
     var y2 = p.sin(angle - p.PI) * radius;
 
     for(var i = 0; i < vertexLength; i++) {
@@ -79,9 +86,13 @@ const sketch = (p) => {
       px[i] += p.random(-stepSize,stepSize);
       py[i] += p.random(-stepSize,stepSize);
 
-      // p.ellipse(px[i], py[i], 10 , 10);
+      // p.ellipse(px[i] + center.x, py[i] + center.y, 10 , 10);
       // console.log(px[i], py[i]);
     }
+
+    var strokeColorIndex = getRandomArrayIndex(ColorPalette[colorTheme]);
+
+    p.stroke(ColorPalette[colorTheme][strokeColorIndex]);
 
     p.beginShape();
     p.curveVertex(px[0] + center.x, py[0] + center.y);
@@ -98,7 +109,7 @@ const sketch = (p) => {
 
   p.keyPressed = function() {
 
-    console.log(p.keyCode);
+    // console.log(p.keyCode);
     if(p.keyCode == p.UP_ARROW) {
 
       if(debug) {
