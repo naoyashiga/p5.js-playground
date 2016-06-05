@@ -30,7 +30,7 @@ const sketch = (p) => {
 
     // p.createCanvas(p.windowWidth / divide, p.windowHeight / divide);
     // p.createCanvas(200,200);
-    var point = 50;
+    var point = 100;
     p.createCanvas(point * 2,point * 2);
     p.pixelDensity(1);
 
@@ -47,12 +47,18 @@ const sketch = (p) => {
     }
 
 
-    for(var i = point; i < point + 10; i++) {
-      for(var j = point; j < point + 10; j++) {
-        grid[i][j].b = 1;
+    // for(var i = point; i < point + 10; i++) {
+    //   for(var j = point; j < point + 10; j++) {
+    //     grid[i][j].b = 1;
+    //   }
+    // }
+    for(var start = 0; start < p.width; start += 30) {
+      for(var i = start; i < start + 10; i++) {
+        for(var j = start; j < start + 10; j++) {
+          grid[i][j].b = 1;
+        }
       }
     }
-
 
 
     // p.background("#ffffff");
