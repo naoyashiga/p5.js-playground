@@ -1,5 +1,5 @@
 import P5 from "p5";
-import ColorPalette from "../ColorPalette";
+import Particle from "./Particle";
 
 class Visualization {
   constructor(cb) {
@@ -16,6 +16,12 @@ const sketch = (p) => {
   var scl = 10;
   var cols, rows;
 
+  var zoff = 0;
+
+  var particles = [];
+
+  var flowFields = [];
+
   p.setup = function() {
 
     p.createCanvas(200,200);
@@ -24,15 +30,24 @@ const sketch = (p) => {
     cols = p.floor(p.width / scl);
     rows = p.floor(p.height / scl);
 
-    console.log(cols);
-    console.log(rows);
-
     // p.noLoop();
+
+
+    for (var i = 0; i < cols * rows; i++) {
+      flowFields.push(p.createVector(0,0));
+    }
+
+    for (var i = 0; i < 100; i++) {
+      particles.push(new Particle(p, scl));
+    }
+
 
   }
 
   p.draw = function () {
-    p.background(51);
+    p.background(255);
+
+    p.randomSeed(10);
 
     var yoff = 0;
 
@@ -42,18 +57,47 @@ const sketch = (p) => {
 
       for(var x = 1; x < cols; x++) {
 
-        var index = (x + y * p.width) * 4;
-        var r = p.noise(xoff, yoff) * 255;
+        var index = x + y * cols;
+        var angle = p.noise(xoff, yoff, zoff) * p.TWO_PI;
+
+        var v = P5.Vector.fromAngle(angle);
+        v.setMag(1);
+
+        flowFields[index] = v;
 
         xoff += inc;
 
-        p.fill(p.random(255));
+        p.stroke(0, 50);
+        p.strokeWeight(1);
 
-        p.rect(x * scl, y * scl, scl, scl);
+        // p.push();
+        //
+        // p.translate(x * scl, y * scl);
+        //
+        // p.rotate(v.heading());
+        //
+        // p.line(0, 0, scl, 0);
+        //
+        // p.pop();
+
       }
 
       yoff += inc;
+
+      zoff += 0.0004;
     }
+
+    particles.forEach((particle) => {
+
+      particle.follow(flowFields, cols);
+
+      particle.update();
+      particle.show();
+      particle.borders();
+    })
+
+    // fr.html(p.floor(p.frameRate()));
+
   }
 
   p.keyPressed = function() {
