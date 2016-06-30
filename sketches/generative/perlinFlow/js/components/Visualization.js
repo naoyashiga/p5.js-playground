@@ -24,8 +24,7 @@ const sketch = (p) => {
 
   p.setup = function() {
 
-    p.createCanvas(200,200);
-    // p.pixelDensity(1);
+    p.createCanvas(500, 100);
 
     cols = p.floor(p.width / scl);
     rows = p.floor(p.height / scl);
@@ -37,10 +36,11 @@ const sketch = (p) => {
       flowFields.push(p.createVector(0,0));
     }
 
-    for (var i = 0; i < 100; i++) {
+    for (var i = 0; i < 500; i++) {
       particles.push(new Particle(p, scl));
     }
 
+    p.background(255);
 
   }
 
@@ -68,7 +68,7 @@ const sketch = (p) => {
         xoff += inc;
 
         p.stroke(0, 50);
-        p.strokeWeight(1);
+        p.strokeWeight(0.3);
 
         // p.push();
         //
@@ -92,8 +92,8 @@ const sketch = (p) => {
       particle.follow(flowFields, cols);
 
       particle.update();
-      particle.show();
       particle.borders();
+      particle.show();
     })
 
     // fr.html(p.floor(p.frameRate()));

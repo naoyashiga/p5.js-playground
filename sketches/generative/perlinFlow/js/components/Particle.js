@@ -6,13 +6,16 @@ export default class Particle {
     this.p = p;
     this.scl = scl;
 
-    this.location = p.createVector(0,0);
+    this.location = p.createVector(p.random(p.width), p.random(p.height));
+    this.prevLocation = this.location.copy();
+
     this.velocity = P5.Vector.random2D();
     this.acceleration = p.createVector(0, 0);
 
     this.maxSpeed = 4;
 
     this.diameter = 1;
+
 
     this.wall = {
       top: this.diameter / 2,
@@ -26,7 +29,7 @@ export default class Particle {
   update() {
     this.velocity.add(this.acceleration);
     this.velocity.limit(this.maxSpeed);
-    
+
     this.location.add(this.velocity);
 
     this.acceleration.mult(0);
@@ -48,28 +51,41 @@ export default class Particle {
 
   show() {
     this.p.stroke(0);
-    this.p.strokeWeight(4);
+    this.p.strokeWeight(0.3);
 
-    this.p.point(this.location.x, this.location.y);
+    this.p.line(this.location.x, this.location.y, this.prevLocation.x, this.prevLocation.y);
+    this.updatePrev();
+
+    // this.p.point(this.location.x, this.location.y, prevLocation.x, this.prevLocation.y);
+  }
+
+  updatePrev() {
+    this.prevLocation.x = this.location.x;
+    this.prevLocation.y = this.location.y;
   }
 
   borders() {
     if (this.location.y < this.wall.top) {
       this.location.y = this.wall.bottom;
+
+      this.updatePrev();
     }
 
     if (this.location.x > this.wall.right) {
       this.location.x = this.wall.left;
+      this.updatePrev();
       // this.velocity.x *= -1;
     }
 
     if (this.location.y > this.wall.bottom) {
       this.location.y = this.wall.top;
+      this.updatePrev();
       // this.velocity.y *= -1;
     }
 
     if (this.location.x < this.wall.left) {
       this.location.x = this.wall.right;
+      this.updatePrev();
       // this.velocity.x *= -1;
     }
   }
