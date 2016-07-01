@@ -12,7 +12,7 @@ export default class Particle {
     this.velocity = P5.Vector.random2D();
     this.acceleration = p.createVector(0, 0);
 
-    this.maxSpeed = 4;
+    this.maxSpeed = 10;
 
     this.diameter = 1;
 
@@ -50,8 +50,8 @@ export default class Particle {
   }
 
   show() {
-    this.p.stroke(0);
-    this.p.strokeWeight(0.3);
+    this.p.stroke(50);
+    this.p.strokeWeight(0.5);
 
     this.p.line(this.location.x, this.location.y, this.prevLocation.x, this.prevLocation.y);
     this.updatePrev();

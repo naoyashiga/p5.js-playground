@@ -13,7 +13,7 @@ const sketch = (p) => {
 
 
   var inc = 0.1;
-  var scl = 10;
+  var scl = 150;
   var cols, rows;
 
   var zoff = 0;
@@ -24,7 +24,8 @@ const sketch = (p) => {
 
   p.setup = function() {
 
-    p.createCanvas(500, 100);
+    // p.createCanvas(window.innerWidth, 100);
+    p.createCanvas(window.innerWidth, window.innerHeight);
 
     cols = p.floor(p.width / scl);
     rows = p.floor(p.height / scl);
@@ -36,7 +37,7 @@ const sketch = (p) => {
       flowFields.push(p.createVector(0,0));
     }
 
-    for (var i = 0; i < 500; i++) {
+    for (var i = 0; i < 10; i++) {
       particles.push(new Particle(p, scl));
     }
 
@@ -45,31 +46,31 @@ const sketch = (p) => {
   }
 
   p.draw = function () {
-    p.background(255);
+    // p.background(250, 20);
 
-    p.randomSeed(10);
+    p.randomSeed(100);
 
     var yoff = 0;
 
-    for(var y = 1; y < rows; y++) {
+    for(var y = 0; y < rows; y++) {
 
       var xoff = 0;
 
-      for(var x = 1; x < cols; x++) {
+      for(var x = 0; x < cols; x++) {
 
         var index = x + y * cols;
         var angle = p.noise(xoff, yoff, zoff) * p.TWO_PI;
 
         var v = P5.Vector.fromAngle(angle);
-        v.setMag(1);
+        v.setMag(10);
 
         flowFields[index] = v;
 
         xoff += inc;
 
-        p.stroke(0, 50);
-        p.strokeWeight(0.3);
-
+        // p.stroke(0, 50);
+        // p.strokeWeight(0.3);
+        //
         // p.push();
         //
         // p.translate(x * scl, y * scl);
@@ -84,7 +85,7 @@ const sketch = (p) => {
 
       yoff += inc;
 
-      zoff += 0.0004;
+      zoff += 0.001;
     }
 
     particles.forEach((particle) => {
